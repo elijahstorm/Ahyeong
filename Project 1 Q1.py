@@ -1,5 +1,5 @@
 def menu():
-    print("This program performs operations on fraction. Enter")
+    print("This program performs will help you calculate operations on fractions. Enter:")
     print("1: To add fraction")
     print("2: To subtract fraction")
     print("3: To multiply fraction")
@@ -8,36 +8,19 @@ def menu():
     choice = int(input())
     return choice
 
-def addFractions():
-    print("For fraction 1")
-    num1 = int(input("Enter the numerator: "))
-    den1 = int(input("Enter the denominator: "))
-    print("For fraction 2")
-    num2 = int(input("Enter the numerator :"))
-    den2 = int(input("Enter the denominator: "))
-    print(num1,"/",den1," + ",num2,"/",den2," = ",(num1*den2 + num2*den1),"/",(den1*den2))
+def addFractions(num1:int,den1:int,num2:int,den2:int):
+    print(f"({num1}/{den1}) + ({num2}/{den2}) = {(num1*den2 + num2*den1)}/{den1*den2}")
 
-def subtractFractions():
-    print("For fraction 1")
-    num1 = int(input("Enter the numerator: "))
-    den1 = int(input("Enter the denominator: "))
-    print("For fraction 2")
-    num2 = int(input("Enter the numerator :"))
-    den2 = int(input("Enter the denominator: "))
-    print(num1, "/", den1, " - ", num2, "/", den2, " = ", (num1 * den2 - num2 * den1), "/", (den1 * den2))
+def subtractFractions(num1: int, den1: int, num2: int, den2: int):
+    print(f"{num1}/{den1} - {num2}/{den2} = {(num1 * den2 - num2 * den1)}/{den1 * den2}")
 
+def multiplyFractions(num1: int, den1: int, num2: int, den2: int):
+    print(f"{num1}/{den1} * {num2}/{den2} = {(num1 * num2)}/{den1 * den2}")
 
-def multiplyFractions():
-    print("For fraction 1")
-    num1 = int(input("Enter the numerator: "))
-    den1 = int(input("Enter the denominator: "))
-    print("For fraction 2")
-    num2 = int(input("Enter the numerator :"))
-    den2 = int(input("Enter the denominator: "))
-    print(num1, "/", den1, " * ", num2, "/", den2, " = ", (num1 * num2), "/", (den1 * den2))
+def divideFractions(num1: int, den1: int, num2: int, den2: int):
+    print(f"{num1}/{den1} / {num2}/{den2} = {(num1 * den2)}/{den1 * num2}")
 
-
-def divideFractions():
+def getInputs(action):
     print("For fraction 1")
     num1 = int(input("Enter the numerator: "))
     den1 = int(input("Enter the denominator: "))
@@ -45,29 +28,26 @@ def divideFractions():
         print("The denominator must be nonzero.")
         den1 = int(input("Enter the denominator: "))
     print("For fraction 2")
-    num2 = int(input("Enter the numerator :"))
+    num2 = int(input("Enter the numerator: "))
     den2 = int(input("Enter the denominator: "))
-    while den2 ==0:
+    while den2 == 0:
         print("To divide, the second fraction must be nonzero. ")
         den2 = int(input("Enter a nonzero number for the numerator: "))
-    print(num1,"/",den1," / ",num2,"/",den2," = ",(num1*den2),"/",(den1*num2))
-
+    action(num1, den1, num2, den2)
 
 def main():
-    choice = menu()
+    choice = 0
     while choice != 9:
         if choice == 1:
-            addFractions()
-            menu()
+            getInputs(addFractions)
         elif choice == 2:
-            subtractFractions
-            menu()
+            getInputs(subtractFractions)
         elif choice == 3:
-            multiplyFractions()
-            menu()
+            getInputs(multiplyFractions)
         elif choice == 4:
-            divideFractions()
-            menu()
+            getInputs(divideFractions)
         elif choice == 9:
-            print()
+            print("Goodbye!")
+        choice = menu()
+
 main()
