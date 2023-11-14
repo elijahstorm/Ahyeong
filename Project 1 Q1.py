@@ -1,5 +1,5 @@
 def menu():
-    print("This program performs will help you calculate operations on fractions. Enter:")
+    print("This program performs operations on fraction. Enter")
     print("1: To add fraction")
     print("2: To subtract fraction")
     print("3: To multiply fraction")
@@ -29,7 +29,7 @@ def divideFractions(num1: int, den1: int, num2: int, den2: int):
     print(f"({num1}/{den1}) / ({num2}/{den2}) = {(num1 * den2)}/{den1 * num2}")
 
 # all inputs will be the same, so we can have just one imput function
-def getInputs(action):
+def getInputs(action, nonzero = False):
     print("For fraction 1")
     num1 = getNumber("Enter the numerator: ")
     den1 = getNumber("Enter the denominator: ")
@@ -38,9 +38,12 @@ def getInputs(action):
         den1 = getNumber("Enter the denominator: ")
     print("For fraction 2")
     num2 = getNumber("Enter the numerator: ")
+    while nonzero and num2 == 0:
+        print("To divide, the second fraction must be nonzero. ")
+        num2 = getNumber("Enter the numerator: ")
     den2 = getNumber("Enter the denominator: ")
     while den2 == 0:
-        print("To divide, the second fraction must be nonzero. ")
+        print("The denominator must be nonzero.")
         den2 = getNumber("Enter a nonzero number for the numerator: ")
     action(num1, den1, num2, den2)
 
@@ -56,7 +59,7 @@ def main():
         elif choice == 3:
             getInputs(multiplyFractions)
         elif choice == 4:
-            getInputs(divideFractions)
+            getInputs(divideFractions, True)
         elif choice == 9:
             print("Goodbye!")
         choice = menu()
