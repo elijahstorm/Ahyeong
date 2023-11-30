@@ -1,0 +1,79 @@
+from typing import List
+import random
+
+def drawMap(map: List[List[int]]):
+    for row in map:
+        print(' '.join([str(i) if i != -1 else '*' for i in row]))
+    
+# since all inputs are numbers, we can make just one getNumber function
+def getNumbers(prompt: str):
+    while True:
+        try:
+            choice = tuple(map(int, input(prompt).split()))
+            return tuple(num - 1 for num in choice)
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+def updateMapFromInputs(answers: List[List[int]], map: List[List[int]], inputs: tuple[int, int]):
+    [row, col] = inputs
+    map[row][col] = answers[row][col]
+    return (map, answers[row][col])
+
+# all inputs will be the same, so we can have just one imput function
+def getInputs(already_picked):
+    promptStr = "Enter the row (1-4) and col (1-4) position of the pair: "
+    row = 0
+    col = 0
+    [row, col] = getNumbers(promptStr)
+    while tuple_exists((row, col), already_picked) or row < 0 or row >= 4 or col < 0 or col >= 4:
+        print("That row and col cannot be picked. Please pick again")
+        print("")
+        [row, col] = getNumbers(promptStr)
+    return (row, col)
+
+def isCompleted(map: List[List[int]]):
+    for row in map:
+        if -1 in row:
+            return False
+    return True
+
+# Function to check if a tuple exists in a list of tuples of the same size
+def tuple_exists(target_tuple, list_of_tuples):
+    for tup in list_of_tuples:
+        if len(tup) == len(target_tuple) and all(x == y for x, y in zip(tup, target_tuple)):
+            return True
+    return False
+
+def main():
+    cols = 4
+    rows = 4
+    answers = [[random.randint(0, 10) for _ in range(cols)] for _ in range(rows)]
+    map = [[-1 for _ in range(cols)] for _ in range(rows)]
+    already_picked = []
+
+    while not isCompleted(map):
+        drawMap(map)
+        [firstRow, firstCol] = getInputs(already_picked)
+        [map, firstCard] = updateMapFromInputs(answers, map, (firstRow, firstCol))
+        already_picked.append((firstRow, firstCol))
+        drawMap(map)
+        [secondRow, secondCol] = getInputs(already_picked)
+        [map, secondCard] = updateMapFromInputs(answers, map, (secondRow, secondCol))
+        drawMap(map)
+        if firstCard == secondCard:
+            print("Correct!")
+            already_picked.append((secondRow, secondCol))
+        else:
+            print("Not a match...")
+            already_picked.pop()
+            map[firstRow][firstCol] = -1
+            map[secondRow][secondCol] = -1
+            
+        print("")
+        print("")
+
+    print("")
+    print("You finished!! Good job")
+    print("")
+
+main()
