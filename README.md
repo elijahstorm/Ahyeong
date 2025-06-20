@@ -1,4 +1,4 @@
-**Project Timeline & Weekly Milestones**
+# Project Timeline & Weekly Milestones
 
 **Week 1 (July 1 - July 7):**
 - Project kickoff and requirements review
